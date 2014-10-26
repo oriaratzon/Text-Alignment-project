@@ -1,0 +1,12 @@
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\bin\Release\text alignment.exe
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\bin\Release\text alignment.pdb
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Release\text alignment.csprojResolveAssemblyReference.cache
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Release\text_alignment.textBox.resources
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Release\text_alignment.Form2.resources
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Release\text_alignment.Properties.Resources.resources
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Release\text alignment.csproj.GenerateResource.Cache
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Release\text alignment.exe
+C:\Users\lee\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Release\text alignment.pdb
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\bin\Release\text alignment.exe.config
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Release\text alignment.exe
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Release\text alignment.pdb

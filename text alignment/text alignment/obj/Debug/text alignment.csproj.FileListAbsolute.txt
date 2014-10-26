@@ -1,0 +1,68 @@
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\bin\Debug\text alignment.exe
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\bin\Debug\text alignment.pdb
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.csprojResolveAssemblyReference.cache
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.exe
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.pdb
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+c:\users\lee\documents\visual studio 2013\Projects\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+C:\Users\lee\Desktop\old ver\text alignment\text alignment\obj\Debug\text alignment.exe
+C:\Users\lee\Desktop\old ver\text alignment\text alignment\obj\Debug\text alignment.pdb
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.exe
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.pdb
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\bin\Debug\text alignment.exe
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\bin\Debug\text alignment.pdb
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.csprojResolveAssemblyReference.cache
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+C:\Users\Oria\Desktop\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.exe
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.pdb
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\bin\Debug\text alignment.exe
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\bin\Debug\text alignment.pdb
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.csprojResolveAssemblyReference.cache
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+C:\Users\Oria\Desktop\backup\Text Alignment click version 1.1\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\obj\Debug\text alignment.exe
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\obj\Debug\text alignment.pdb
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\bin\Debug\text alignment.exe
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\bin\Debug\text alignment.pdb
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\obj\Debug\text alignment.csprojResolveAssemblyReference.cache
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+C:\Users\Oria\Desktop\ali\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\bin\Debug\text alignment.exe.config
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.csprojResolveAssemblyReference.cache
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\bin\Debug\text alignment.exe
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\bin\Debug\text alignment.pdb
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\bin\Debug\Alignment.dll
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\bin\Debug\render_letters.dll
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.exe
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\text alignment\text alignment\obj\Debug\text alignment.pdb
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\bin\Debug\text alignment.exe.config
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\bin\Debug\text alignment.exe
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\bin\Debug\text alignment.pdb
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\obj\Debug\text alignment.exe
+F:\Users\Oria\Documents\Visual Studio 2013\Projects\2\text alignment\text alignment\obj\Debug\text alignment.pdb
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\bin\Debug\text alignment.exe.config
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text alignment.exe
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text alignment.pdb
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\bin\Debug\text alignment.exe
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\bin\Debug\text alignment.pdb
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
