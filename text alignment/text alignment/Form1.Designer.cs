@@ -48,9 +48,6 @@ namespace text_alignment
             this.LoadManuButton = new System.Windows.Forms.Button();
             this.loadTextButton = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.findLineButtons = new System.Windows.Forms.Button();
-            this.setLineButton = new System.Windows.Forms.Button();
-            this.executeButton = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadManuscriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +62,10 @@ namespace text_alignment
             this.setParametersMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.hightLabel = new System.Windows.Forms.Label();
+            this.widthLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.manuscriptPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.manuPicBox)).BeginInit();
@@ -268,47 +269,14 @@ namespace text_alignment
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.findLineButtons);
-            this.panel4.Controls.Add(this.setLineButton);
-            this.panel4.Controls.Add(this.executeButton);
+            this.panel4.Controls.Add(this.widthLabel);
+            this.panel4.Controls.Add(this.hightLabel);
+            this.panel4.Controls.Add(this.label2);
+            this.panel4.Controls.Add(this.label1);
             this.panel4.Location = new System.Drawing.Point(683, 3);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(579, 33);
             this.panel4.TabIndex = 21;
-            // 
-            // findLineButtons
-            // 
-            this.findLineButtons.Location = new System.Drawing.Point(263, 5);
-            this.findLineButtons.Name = "findLineButtons";
-            this.findLineButtons.Size = new System.Drawing.Size(124, 23);
-            this.findLineButtons.TabIndex = 4;
-            this.findLineButtons.TabStop = false;
-            this.findLineButtons.Text = "Find Line";
-            this.findLineButtons.UseVisualStyleBackColor = true;
-            this.findLineButtons.Visible = false;
-            this.findLineButtons.Click += new System.EventHandler(this.onFindLineClick);
-            // 
-            // setLineButton
-            // 
-            this.setLineButton.Location = new System.Drawing.Point(3, 6);
-            this.setLineButton.Name = "setLineButton";
-            this.setLineButton.Size = new System.Drawing.Size(124, 23);
-            this.setLineButton.TabIndex = 5;
-            this.setLineButton.Text = "Set Line";
-            this.setLineButton.UseVisualStyleBackColor = true;
-            this.setLineButton.Visible = false;
-            this.setLineButton.Click += new System.EventHandler(this.setLineButton_Click);
-            // 
-            // executeButton
-            // 
-            this.executeButton.Location = new System.Drawing.Point(133, 6);
-            this.executeButton.Name = "executeButton";
-            this.executeButton.Size = new System.Drawing.Size(124, 23);
-            this.executeButton.TabIndex = 3;
-            this.executeButton.Text = "Execute";
-            this.executeButton.UseVisualStyleBackColor = true;
-            this.executeButton.Visible = false;
-            this.executeButton.Click += new System.EventHandler(this.onclick);
             // 
             // menuStrip1
             // 
@@ -427,6 +395,42 @@ namespace text_alignment
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Hight: ";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(134, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Width:";
+            // 
+            // hightLabel
+            // 
+            this.hightLabel.AutoSize = true;
+            this.hightLabel.Location = new System.Drawing.Point(71, 10);
+            this.hightLabel.Name = "hightLabel";
+            this.hightLabel.Size = new System.Drawing.Size(35, 13);
+            this.hightLabel.TabIndex = 2;
+            this.hightLabel.Text = "label3";
+            // 
+            // widthLabel
+            // 
+            this.widthLabel.AutoSize = true;
+            this.widthLabel.Location = new System.Drawing.Point(178, 10);
+            this.widthLabel.Name = "widthLabel";
+            this.widthLabel.Size = new System.Drawing.Size(35, 13);
+            this.widthLabel.TabIndex = 3;
+            this.widthLabel.Text = "label3";
+            // 
             // textBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -450,6 +454,7 @@ namespace text_alignment
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -464,7 +469,6 @@ namespace text_alignment
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private Button executeButton;
         private Panel manuscriptPanel;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem fileToolStripMenuItem;
@@ -479,8 +483,6 @@ namespace text_alignment
         private ToolStripMenuItem setParametersMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
-        private Button findLineButtons;
-        private Button setLineButton;
         private Panel panel3;
         private PictureBox manuPicBox;
         private Panel panel2;
@@ -493,6 +495,10 @@ namespace text_alignment
         private Button button1;
         private Button leftDirButton;
         private Button rightDirButton;
+        private Label widthLabel;
+        private Label hightLabel;
+        private Label label2;
+        private Label label1;
     }
 }
 

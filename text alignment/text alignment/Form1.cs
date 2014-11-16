@@ -61,7 +61,7 @@ namespace text_alignment
         private Point m_ButtomCorrectionPoint = new Point();
         private int m_CurrentManuscriptLineIndex = -1;
         private int m_CurrentTranscriptLineIndex = 0;
-        private Dictionary<int, int> m_StartEndOfLinesPixels = new Dictionary<int, int>();//{{0, 20},{20, 45},{45, 88},{88, 132},{132, 151},{151, 174},{174, 213}, {233, 257},{257, 275},{275, 295},{295, 317},{317, 338},{338, 357},{357, 378},{378, 398},{398, 418},{418, 435},{435, 455},{455, 478},{478, 496}, {496,515},{515, 539},{539, 563},{563, 584},{584, 611},{611, 632}};//for the demo
+        //private Dictionary<int, int> m_StartEndOfLinesPixels = new Dictionary<int, int>();//{{0, 20},{20, 45},{45, 88},{88, 132},{132, 151},{151, 174},{174, 213}, {233, 257},{257, 275},{275, 295},{295, 317},{317, 338},{338, 357},{357, 378},{378, 398},{398, 418},{418, 435},{435, 455},{455, 478},{478, 496}, {496,515},{515, 539},{539, 563},{563, 584},{584, 611},{611, 632}};//for the demo
         private bool m_FindLineClicked = false;
         private bool m_ManuPicBoxContainAPic = false;
         private EMoveMode m_CurrMode = EMoveMode.line;
@@ -81,11 +81,17 @@ namespace text_alignment
         private EDirection m_FixDirection = EDirection.left;
         private Color m_FixButtonChosenColor = Color.LightSkyBlue;
         private bool m_LineWasDetected = false;
+        private int m_OffsetInLine;// in case of running the algorithm on a part of a line + the matched text that was selected manually, we need to save the offset of the index
+        private Dictionary<int, int> m_FinalStartEndOfLinesPixels = new Dictionary<int, int>();
+        private KeyValuePair<int, int> m_CurrentStartEndLine = new KeyValuePair<int, int>();
+        private int m_NumOfRecognizedLinesInTranscript = 0;
+        private int m_NumOfCharsInCurrLine;
+
 
         internal class PixelDetails
         {
-            private int m_LineNumber;
-            private int m_IndexInLine;
+            private int m_LineNumber = -1;
+            private int m_IndexInLine = -1;
 
             public PixelDetails()
             { }
@@ -205,25 +211,41 @@ namespace text_alignment
                 fillStartEndOfLinesPixels(ad);
             }
             o_Y1 = o_Y2 = -1;
-            if (m_CurrentManuscriptLineIndex < m_StartEndOfLinesPixels.Count()-1)
+            if (m_CurrentManuscriptLineIndex < m_NumOfRecognizedLinesInTranscript+1)
             {
                 if (i_NewLine == true)
                 {
                     m_CurrentManuscriptLineIndex++;
                 }
-                KeyValuePair<int, int> startEnd = m_StartEndOfLinesPixels.ElementAt(m_CurrentManuscriptLineIndex);
-                o_Y1 = startEnd.Key;
-                o_Y2 = startEnd.Value;                
+                //KeyValuePair<int, int> startEnd = m_StartEndOfLinesPixels.ElementAt(Math.Max(m_CurrentManuscriptLineIndex,0));
+                o_Y1 = m_CurrentStartEndLine.Key;
+                o_Y2 = m_CurrentStartEndLine.Value;          
             }
         }
 
         private void fillStartEndOfLinesPixels(double[,] i_StartIndexesArray)
         {
-            m_StartEndOfLinesPixels.Clear();
-            for (int i = 0; i < i_StartIndexesArray.Length-2; i++)
+            int y = 0;
+            if (m_ButtomLeftLinePoint.Y > 0)
             {
-                m_StartEndOfLinesPixels.Add((int)i_StartIndexesArray[i, 0], (int)i_StartIndexesArray[i + 1, 0]);
+                y = m_ButtomLeftLinePoint.Y + 1;
             }
+            m_CurrentStartEndLine = new KeyValuePair<int, int>(y+(int)i_StartIndexesArray[0,0],
+            y + (int)i_StartIndexesArray[1,0] );
+            
+            //Dictionary<int, int> newStartEndOfLinesPixels = new Dictionary<int, int>();
+            //for (int i = 0; i < i_StartIndexesArray.Length-2; i++)
+            //{
+            //    if (i < m_CurrentTranscriptLineIndex)
+            //    {
+            //        newStartEndOfLinesPixels.Add(m_StartEndOfLinesPixels.ElementAt(i).Key, m_StartEndOfLinesPixels.ElementAt(i).Value);
+            //    }
+            //    else
+            //    {
+            //        newStartEndOfLinesPixels.Add((int)i_StartIndexesArray[i - m_CurrentTranscriptLineIndex, 0], (int)i_StartIndexesArray[i - m_CurrentTranscriptLineIndex + 1, 0]);
+            //    }
+            //}
+            //m_StartEndOfLinesPixels = newStartEndOfLinesPixels;
         }
 
         private void initLetters()
@@ -231,7 +253,8 @@ namespace text_alignment
             int i = 0;
             string text = string.Empty;
             var filePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "\\..\\..\\letters.txt";
-            using (StreamReader streamReader = new StreamReader(filePath, Encoding.UTF8))
+
+            using (StreamReader streamReader = new StreamReader(filePath, Encoding.GetEncoding(862)))
             {
                 text = streamReader.ReadLine();
                 while (text != null)
@@ -305,7 +328,14 @@ namespace text_alignment
         // [MAP,text_image] = render_letters(file_name, direction, font_name)
         private void onLoadTextClick(object sender, EventArgs e)
         {
-            loadTranscript();
+            if (m_ManuFileName == null)
+            {
+                MessageBox.Show("Please load the manuscript file first");
+            }
+            else
+            {
+                loadTranscript();
+            }
         }
 
         private void loadTranscript()
@@ -436,11 +466,10 @@ namespace text_alignment
 
             while (index < richTextBox1.Text.LastIndexOf(searchTextBox.Text))
             {
-                
                 if (index == -1)
                     index = 0;
-                indexToText = richTextBox1.Find(searchTextBox.Text, index, richTextBox1.TextLength, RichTextBoxFinds.None);
-                if (textFound == false && indexToText >= 0)
+                indexToText = richTextBox1.Find(searchTextBox.Text, index, richTextBox1.TextLength, RichTextBoxFinds.MatchCase);
+                if (textFound == false && indexToText >= 0 && richTextBox1.Text.Substring(indexToText, searchTextBox.Text.Length) == searchTextBox.Text)
                 {
                     textFound = true;
                 }
@@ -480,13 +509,31 @@ namespace text_alignment
             initManuImage(m_ManuFileName);
             string lettersStr = new string (m_Letters);
             int i = 0;
+            
             while ((i = lettersStr.IndexOf(searchTextBox.Text, i)) != -1)
 	        {
                 int currentColorIndex = 0;
+                //
+                int lineNum = richTextBox1.GetLineFromCharIndex(i);
+                int offset = richTextBox1.Lines[lineNum].IndexOf(searchTextBox.Text);
+                
                 for(int j=0; j < searchTextBox.Text.Length; j++)
                 {
-                    drawRectangle(m_LettersMatrix[i + j].X, m_LettersMatrix[i + j].Y - m_LettersMatrix[i + j].Hight,
-                        m_LettersMatrix[i + j].Width, m_LettersMatrix[i + j].Hight, EType.Filled, m_ManuscriptColorsArray[currentColorIndex]);
+                    //look for the pixels of this index in m_PixelDetailsMatrix and color it
+                    for (int h = 0; h < manuPicBox.Image.Size.Height; h++)
+                    {
+                        for (int w = 0; w < manuPicBox.Image.Size.Width; w++)
+                        {
+                            if (m_PixelDetailsMatrix[h, w].IndexInLine == offset && m_PixelDetailsMatrix[h, w].LineNumber == lineNum)
+                            {
+
+                                //drawRectangle(m_LettersMatrix[i + j].X, m_LettersMatrix[i + j].Y - m_LettersMatrix[i + j].Hight,
+                                //m_LettersMatrix[i + j].Width, m_LettersMatrix[i + j].Hight, EType.Filled, m_ManuscriptColorsArray[currentColorIndex]);
+                                drawRectangle(w, h, 1, 1, EType.Filled, m_ManuscriptColorsArray[currentColorIndex]);                                
+                            }
+                        }
+                    }
+                    offset++;
                     currentColorIndex = (currentColorIndex + 1) % 2;
                 }
                 i++;
@@ -503,9 +550,16 @@ namespace text_alignment
                 currentColorIndex = (currentColorIndex + 1) % 2;
             }
         }
-        class CMR// Character Measures Recognition
+        class CMR// Character Measures Recognition- the proper input is a string that is ends with '\n'
         {
-            public CMR() { }
+            private EMoveMode m_MoveMode;
+            private EDirection m_PartialTextDir;
+
+            public CMR(EMoveMode i_MoveMode, EDirection i_PartialTextDir)
+            {
+                m_MoveMode = i_MoveMode;
+                m_PartialTextDir = i_PartialTextDir;
+            }
 
             int[,] m_PixelMatrix;//each cell in this matrix will contain the character that appears in the pixel as it's index in the 
             double[,] m_IndexMatrix;
@@ -656,18 +710,50 @@ namespace text_alignment
                 }
                 else // R to L
                 {
+                    //if (m_PartialTextDir == EDirection.right && m_MoveMode == EMoveMode.col)
+                    //{
+                    //    m_Image = ConvertCharToImage(i_Str[i_Str.Length - 1], i_Fontname, i_Fontsize);
+                    //    updatePixelMatrix(0, 0);
+                    //    updateIndexMatrix(i_Str.Length - 1, m_Image.Size.Width - 1, m_Image.Size.Height, m_Image.Size.Width, m_Image.Size.Height);
+                    //    for (int i = i_Str.Length - 2; i >= 0; i--)
+                    //    {
+                    //        widthOffset = m_Image.Size.Width;
+                    //        x = widthOffset;
+                    //        imageToAppend = ConvertCharToImage(i_Str[i], i_Fontname, i_Fontsize);
+                    //        AppendImage(i_Direction, imageToAppend);
+                    //        updatePixelMatrix(widthOffset, i);
+                    //        updateIndexMatrix(i, x, m_Image.Height, m_Image.Size.Width - x, m_Image.Height);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    m_Image = ConvertCharToImage(i_Str[i_Str.Length - 2], i_Fontname, i_Fontsize);
+                    //    updatePixelMatrix(0, 0);
+                    //    updateIndexMatrix(i_Str.Length - 2, m_Image.Size.Width - 1, m_Image.Size.Height, m_Image.Size.Width, m_Image.Size.Height);
+                    //    for (int i = i_Str.Length - 3; i >= 0; i--)
+                    //    {
+                    //        widthOffset = m_Image.Size.Width;
+                    //        x = widthOffset;
+                    //        imageToAppend = ConvertCharToImage(i_Str[i], i_Fontname, i_Fontsize);
+                    //        AppendImage(i_Direction, imageToAppend);
+                    //        updatePixelMatrix(widthOffset, i);
+                    //        updateIndexMatrix(i, x, m_Image.Height, m_Image.Size.Width - x, m_Image.Height);
+                    //    }
+                    //}
                     m_Image = ConvertCharToImage(i_Str[i_Str.Length - 2], i_Fontname, i_Fontsize);
                     updatePixelMatrix(0, 0);
                     updateIndexMatrix(i_Str.Length - 2, m_Image.Size.Width - 1, m_Image.Size.Height, m_Image.Size.Width, m_Image.Size.Height);
-                    for (int i = i_Str.Length-3; i >= 0; i--)
+                    for (int i = i_Str.Length - 3; i >= 0; i--)
                     {
                         widthOffset = m_Image.Size.Width;
                         x = widthOffset;
                         imageToAppend = ConvertCharToImage(i_Str[i], i_Fontname, i_Fontsize);
                         AppendImage(i_Direction, imageToAppend);
                         updatePixelMatrix(widthOffset, i);
-                        updateIndexMatrix(i, x, m_Image.Height, m_Image.Size.Width-x, m_Image.Height);
+                        updateIndexMatrix(i, x, m_Image.Height, m_Image.Size.Width - x, m_Image.Height);
                     }
+                    
+                    
                 }
                 
 
@@ -750,9 +836,11 @@ namespace text_alignment
             Bitmap bmpImage;
             int x = 0;
             int y = 0;
-            if (m_LinesRectangles.Count > 0)
+            //if (m_LinesRectangles.Count > 0)
+            if (m_CurrentTranscriptLineIndex > 0)
             {
-                y = m_LinesRectangles[m_LinesRectangles.Count() - 1].Y + m_LinesRectangles[m_LinesRectangles.Count() - 1].H;
+                //y = m_LinesRectangles[m_LinesRectangles.Count() - 1].Y + m_LinesRectangles[m_LinesRectangles.Count() - 1].H;
+                y = m_ButtomLeftLinePoint.Y+1;
             }
 
             if(manuPicBox.Image.Size.Height - y > 0)
@@ -798,9 +886,13 @@ namespace text_alignment
 
         private void setLineButton_Click(object sender, EventArgs e)
         {
-            m_SetLineWasPressedForTheFirstTime = true;
+            setLines();
+        }
+
+        private void setLines()
+        {
             m_LinesRectangles.Add(new AlignmentRectangle(m_TopLeftLinePoint.X, m_TopLeftLinePoint.Y,
-                m_TopRightLinePoint.X- m_TopLeftLinePoint.X, m_ButtomLeftLinePoint.Y - m_ButtomRightLinePoint.Y));
+                m_TopRightLinePoint.X - m_TopLeftLinePoint.X, m_ButtomLeftLinePoint.Y - m_ButtomRightLinePoint.Y));
         }        
 
         private void onclick(object sender, EventArgs e)
@@ -814,12 +906,10 @@ namespace text_alignment
         }
 
         private void findLine()
-        {
-            
+        {            
             initManuImage(m_ManuFileName);
             if (m_FindLineClicked == false)
             {
-                findLineButtons.Text = "Find Next Line";
                 m_FindLineClicked = true;
             }
             initLineBordersPoints();
@@ -837,18 +927,18 @@ namespace text_alignment
             getHorizlePixelOfTheRectangle(out topHorizonPixel, out buttomHorizonPixel, true);
             m_ButtomLeftLinePoint.X = m_TopLeftLinePoint.X = 0;
             m_ButtomRightLinePoint.X = m_TopRightLinePoint.X = manuPicBox.Size.Width - 1;
-            m_ButtomRightLinePoint.Y = m_ButtomLeftLinePoint.Y = buttomHorizonPixel;
-            m_TopRightLinePoint.Y = m_TopLeftLinePoint.Y = topHorizonPixel;
+            m_ButtomRightLinePoint.Y = m_ButtomLeftLinePoint.Y = m_CurrentStartEndLine.Value;
+            m_TopRightLinePoint.Y = m_TopLeftLinePoint.Y = m_CurrentStartEndLine.Key;
         }
 
 
         private void initCorrectionLinePoints()
         {
-            int topHorizonPixel, buttomHorizonPixel;
-            getHorizlePixelOfTheRectangle(out topHorizonPixel, out buttomHorizonPixel, false);
+            //int topHorizonPixel, buttomHorizonPixel;
+            //getHorizlePixelOfTheRectangle(out topHorizonPixel, out buttomHorizonPixel, false);
             m_TopCorrectionPoint.X = m_ButtomCorrectionPoint.X = manuPicBox.Size.Width / 2;
-            m_ButtomCorrectionPoint.Y = buttomHorizonPixel;
-            m_TopCorrectionPoint.Y = topHorizonPixel;
+            m_ButtomCorrectionPoint.Y = m_CurrentStartEndLine.Value;
+            m_TopCorrectionPoint.Y = m_CurrentStartEndLine.Key;
         }
 
         private void drawResizbleVerticalLine()
@@ -899,24 +989,32 @@ namespace text_alignment
 
         private void manuPicBox_MouseMove(object sender, MouseEventArgs e)
         {
+            updateWidthHight(e);
+            int y = Math.Max(e.Y, 0);
+            int x = Math.Max(e.X, 0);
+            y = Math.Min(manuPicBox.Size.Height - 1, e.Y);
+            x = Math.Min(manuPicBox.Size.Width - 1, e.X);
+
             if (m_PointMoveInProgress == ELineChangeType.topLineMove) // If moving first point
             {
-                m_TopLeftLinePoint.Y = e.Y;
-                m_TopRightLinePoint.Y = e.Y;
-                changeStartLineInterger(e.Y);                
+                m_TopLeftLinePoint.Y = y;
+                m_TopRightLinePoint.Y = y;
+                m_CurrentStartEndLine = new KeyValuePair<int, int>(y, m_CurrentStartEndLine.Value);
+                //changeStartLineInterger(y);                
                 Refresh();
             }
             else if (m_PointMoveInProgress == ELineChangeType.buttomLineMove) // If moving second point
             {
-                m_ButtomRightLinePoint.Y = e.Y;
-                m_ButtomLeftLinePoint.Y = e.Y;
-                m_StartEndOfLinesPixels[m_StartEndOfLinesPixels.ElementAt(m_CurrentManuscriptLineIndex).Key] = e.Y;
+                m_ButtomRightLinePoint.Y = y;
+                m_ButtomLeftLinePoint.Y = y;
+                //m_StartEndOfLinesPixels[m_StartEndOfLinesPixels.ElementAt(m_CurrentManuscriptLineIndex).Key] = y;
+                m_CurrentStartEndLine = new KeyValuePair<int,int>(m_CurrentStartEndLine.Key,y);
                 Refresh();
             }
             else if (m_PointMoveInProgress == ELineChangeType.verticalLineMove)// if moving is vertical line
             {
-                m_ButtomCorrectionPoint.X = e.X;
-                m_TopCorrectionPoint.X = e.X;
+                m_ButtomCorrectionPoint.X = x;
+                m_TopCorrectionPoint.X = x;
                 Refresh();
             }
             else // If moving in the PictureBox: change cursor to hand if above a handle
@@ -941,24 +1039,30 @@ namespace text_alignment
             }
         }
 
-        private void changeStartLineInterger(int i_NewStartPoint)
+        private void updateWidthHight(MouseEventArgs e)
         {
-            int i = 0;
-            Dictionary <int, int> newStartEndOfLinesPixels = new Dictionary<int,int>();
-            foreach (KeyValuePair<int, int> pair in m_StartEndOfLinesPixels)
-            {
-                if(i == m_CurrentManuscriptLineIndex)
-                {
-                    newStartEndOfLinesPixels.Add(i_NewStartPoint, pair.Value);
-                }
-                else
-                {
-                    newStartEndOfLinesPixels.Add(pair.Key, pair.Value);
-                }
-                i++;
-            }
-            m_StartEndOfLinesPixels = newStartEndOfLinesPixels;
-        }        
+            widthLabel.Text = e.X.ToString();
+            hightLabel.Text = e.Y.ToString();
+        }
+
+        //private void changeStartLineInterger(int i_NewStartPoint)
+        //{
+        //    int i = 0;
+        //    Dictionary <int, int> newStartEndOfLinesPixels = new Dictionary<int,int>();
+        //    foreach (KeyValuePair<int, int> pair in m_StartEndOfLinesPixels)
+        //    {
+        //        if(i == m_CurrentManuscriptLineIndex)
+        //        {
+        //            newStartEndOfLinesPixels.Add(i_NewStartPoint, pair.Value);
+        //        }
+        //        else
+        //        {
+        //            newStartEndOfLinesPixels.Add(pair.Key, pair.Value);
+        //        }
+        //        i++;
+        //    }
+        //    m_StartEndOfLinesPixels = newStartEndOfLinesPixels;
+        //}        
 
         private void manuPicBox_MouseDown(object sender, MouseEventArgs e)
         {
@@ -1083,8 +1187,18 @@ namespace text_alignment
             }
             else if (dataIsSet)
             {
+                setOffsetInLine();
                 alignLine();
             }            
+        }
+
+        private void setOffsetInLine()
+        {
+            int selectionIndex = richTextBox1.SelectionStart;
+            int lineNum = richTextBox1.GetLineFromCharIndex(selectionIndex);
+            m_OffsetInLine = (richTextBox1.Lines[lineNum]+"\n").IndexOf(richTextBox1.SelectedText);
+            m_OffsetInLine = Math.Max(m_OffsetInLine, 0);
+            m_NumOfCharsInCurrLine = richTextBox1.Lines[lineNum].Length;
         }
 
         private void alignLine()
@@ -1092,10 +1206,16 @@ namespace text_alignment
             initManuImage(m_ManuFileName);
             drawResizbleRectangle();
 
-            updateRectanglePoints();
-            m_CurrMode = EMoveMode.col;
+            updateRectanglePointsAndAddLineIfNessecary();
             string text = richTextBox1.SelectedText;
-            CMR cmr = new CMR();
+            if (text[text.Length - 1] != '\n')
+            {
+                text += '\n';
+            }
+            CMR cmr = new CMR(m_CurrMode, m_FixDirection);
+            m_CurrMode = EMoveMode.col;
+            
+            
             cmr.StringToImage(0, richTextBox1.SelectedText, m_FontName, m_FontSize);
             cmr.Image.Save(Directory.GetCurrentDirectory() + "\\myBitmap.bmp");
             //Rectangle srcRect = new Rectangle(0, m_TopRightLinePoint.Y, m_TopRightLinePoint.X - 1, m_ButtomRightLinePoint.Y - m_TopRightLinePoint.Y);
@@ -1126,7 +1246,7 @@ namespace text_alignment
             }
         }
 
-        private void updateRectanglePoints()
+        private void updateRectanglePointsAndAddLineIfNessecary()
         {
             if (m_CurrMode == EMoveMode.col)
             {
@@ -1140,7 +1260,12 @@ namespace text_alignment
                     m_TopLeftLinePoint.X = m_TopCorrectionPoint.X;
                     m_ButtomLeftLinePoint.X = m_ButtomCorrectionPoint.X;
                 }
-           }
+            }
+            else
+            {
+                m_FinalStartEndOfLinesPixels.Add(m_CurrentStartEndLine.Key, m_CurrentStartEndLine.Value);
+                m_NumOfRecognizedLinesInTranscript++;
+            }
         }
 
 
@@ -1156,17 +1281,24 @@ namespace text_alignment
             CsvFileReader matrixCsv = new CsvFileReader(m_AlignReturnedMatrixFilePath);
             CsvRow currRow = new CsvRow();
             int x, y = 1;
+            int toAdd = 0;
+             int toAdd2 = 0;
+             if (m_FixDirection == EDirection.right)
+             {
+                 toAdd = m_OriginalImage.Width-  m_ButtomCorrectionPoint.X;
+                 toAdd2 = m_OffsetInLine;
+             }
             while (matrixCsv.ReadRow(currRow))
             {
                 for (x = 1; x < m_Cropped.Size.Width - 1; x++)// the alignline bring as back a matrix in the size of m_cropped minus one line from each side and one coloum from each side
                 {
-                    int currentLetterIndexInLine = Int32.Parse(currRow[x-1]);
-                    m_PixelDetailsMatrix[y + m_StartEndOfLinesPixels.ElementAt(
-                        m_CurrentManuscriptLineIndex).Key, x].SetPixelDetails
+                    int currentLetterIndexInLine = Int32.Parse(currRow[x - 1])+toAdd2;
+                    m_PixelDetailsMatrix[y + m_FinalStartEndOfLinesPixels.ElementAt(
+                        m_CurrentManuscriptLineIndex).Key, x+toAdd].SetPixelDetails
                         (m_CurrentManuscriptLineIndex, currentLetterIndexInLine);
                     if (currentLetterIndexInLine > 0)
                     {
-                        drawRectangle(x, y+ m_StartEndOfLinesPixels.ElementAt(m_CurrentManuscriptLineIndex).Key, 1, 1, EType.Filled,
+                        drawRectangle(x, y + m_FinalStartEndOfLinesPixels.ElementAt(m_CurrentManuscriptLineIndex).Key, 1, 1, EType.Filled,
                             m_ManuscriptColorsArray[(currentLetterIndexInLine - 1) % 2]);
                     }
                 }
@@ -1195,7 +1327,7 @@ namespace text_alignment
 
         private void findNextLine_Click(object sender, EventArgs e)
         {
-            m_CurrMode = EMoveMode.line;
+           m_CurrMode = EMoveMode.line;
             bool dataIsSet = wasDataInitlized();
 
             if(dataIsSet)

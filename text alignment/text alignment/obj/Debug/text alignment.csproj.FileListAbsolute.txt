@@ -66,3 +66,13 @@ C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignm
 C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
 C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
 C:\Users\Oria\Documents\Visual Studio 2010\Projects\2\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\bin\Debug\text alignment.exe.config
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\obj\Debug\text alignment.exe
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\obj\Debug\text alignment.pdb
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\bin\Debug\text alignment.exe
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\bin\Debug\text alignment.pdb
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\obj\Debug\text alignment.csprojResolveAssemblyReference.cache
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\obj\Debug\text_alignment.textBox.resources
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\obj\Debug\text_alignment.Form2.resources
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\obj\Debug\text_alignment.Properties.Resources.resources
+C:\Users\Oria\Documents\Visual Studio 2010\Projects\Text Alignment project\text alignment\text alignment\obj\Debug\text alignment.csproj.GenerateResource.Cache
